@@ -23,29 +23,42 @@ LOCAL_PATH:= $(call my-dir)
 # variant, so that it gets overwritten by the parent (which goes
 # against the traditional rules of inheritance).
 
-USE_CAMERA_STUB := true
+USE_CAMERA_STUB:= true
 TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
 
+# Recovery
 TARGET_PREBUILT_RECOVERY_KERNEL := device/samsung/gio/prebuilt/recovery_kernel
 TARGET_RECOVERY_INITRC := device/samsung/gio/recovery.rc
 
+# CPU
 TARGET_BOARD_PLATFORM := msm7k
 TARGET_ARCH_VARIANT := armv6-vfp
 TARGET_CPU_ABI := armeabi-v6l
 TARGET_CPU_ABI2 := armeabi
 
+#GPU
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
-TARGET_BOOTLOADER_BOARD_NAME := gio
-TARGET_OTA_ASSERT_DEVICE := gio,GT-S5660,GT-S5660v,GT-S5660M,GT-S5660L
+BOARD_AVOID_DRAW_TEXTURE_EXTENSION := true
 
+TARGET_OVERLAY_ALWAYS_DETERMINES_FORMAT := true
+TARGET_USE_SOFTWARE_AUDIO_AAC := true
+
+TARGET_BOOTLOADER_BOARD_NAME := gio
+TARGET_OTA_ASSERT_DEVICE := gio,GT-S5660
+BOARD_USE_SCREENCAP := true
+
+# Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
-
-BOARD_HAVE_FM_RADIO := true
-BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
-BOARD_FM_DEVICE := bcm4325
+BOARD_FORCE_STATIC_A2DP := true
 HAS_BCM20780 := true
 BOARD_GLOBAL_CFLAGS += -DHAS_BCM20780
+
+# FM Radio
+BOARD_HAVE_FM_RADIO := true
+BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
+BOARD_FM_DEVICE := bcm2049
 
 # Wifi related defines
 BOARD_WPA_SUPPLICANT_DRIVER := AWEXT
@@ -66,12 +79,13 @@ JS_ENGINE := v8
 BOARD_EGL_CFG := device/samsung/gio/prebuilt/egl.cfg
 
 ## to enable the GPS HAL
-BOARD_GPS_LIBRARIES := libloc_api
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QCOM_LIBS := true
 BOARD_USES_QCOM_GPS := true
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := gio
-BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
+BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 1240
+BOARD_GPS_LIBRARIES := libloc_api
+BOARD_GPS_NEEDS_XTRA := true
 
 BOARD_MOBILEDATA_INTERFACE_NAME = "pdp0"
 
@@ -79,12 +93,9 @@ BOARD_KERNEL_BASE := 0x13600000
 BOARD_KERNEL_PAGESIZE := 4096
 TARGET_PROVIDES_LIBAUDIO := true
 
-BOARD_CUSTOM_USB_CONTROLLER := ../../device/samsung/gio/UsbController.cpp
 BOARD_USE_USB_MASS_STORAGE_SWITCH := true
-
 BOARD_UMS_LUNFILE := "/sys/devices/platform/usb_mass_storage/lun0/file"
-
-BOARD_CUSTOM_USB_CONTROLLER := ../../device/samsung/gio/UsbController.cpp
+BOARD_UMS_LUNFILE := "/sys/devices/platform/usb_mass_storage/lun0/file"
 
 # fix this up by examining /proc/mtd on a running device
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
